@@ -11,6 +11,10 @@ return {
   },
   { "ThePrimeagen/harpoon" },
   {
+    "hrsh7th/nvim-cmp",
+    enabled = true,
+  },
+  {
     "Exafunction/windsurf.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -37,6 +41,25 @@ return {
           { name = "path" },
         }),
       })
+    end,
+  },
+
+  {
+    "luckasRanarison/tailwind-tools.nvim",
+    name = "tailwind-tools",
+    build = ":UpdateRemotePlugins",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim", -- optional
+      "neovim/nvim-lspconfig", -- optional
+    },
+    opts = {}, -- your configuration
+  },
+
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
     end,
   },
 }

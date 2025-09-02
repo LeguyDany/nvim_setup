@@ -6,8 +6,8 @@ return {
         -- install language servers
         "lua-language-server",
         "python-lsp-server",
-        "eslint-lsp",
         "typescript-language-server",
+        "tailwindcss",
 
         -- install formatters
         "stylua",
