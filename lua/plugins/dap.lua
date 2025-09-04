@@ -1,3 +1,12 @@
+local function launch_chromium()
+  vim.fn.jobstart({
+    "chromium",
+    "--remote-debugging-port=9222",
+    "--user-data-dir=/tmp/chrome-debug",
+    "http://localhost:3000",
+  }, { detach = true })
+end
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -97,21 +106,6 @@ return {
 
       dap.configurations.javascript = {
         {
-          type = "node2",
-          request = "launch",
-          name = "Launch file",
-          program = "${file}",
-          cwd = vim.fn.getcwd(),
-          sourceMaps = true,
-          protocol = "inspector",
-        },
-        {
-          type = "node2",
-          request = "attach",
-          name = "Attach to process",
-          processId = require("dap.utils").pick_process,
-        },
-        {
           type = "pwa-node",
           request = "launch",
           name = "Launch Express.js with Nodemon",
@@ -132,13 +126,34 @@ return {
           internalConsoleOptions = "neverOpen",
           restart = true,
         },
+        {
+          name = "Run React dev server (npm start)",
+          type = "pwa-node",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          runtimeExecutable = "npm",
+          runtimeArgs = { "run", "start" },
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+        },
+        {
+          name = "Launch Chromium (React dev server)",
+          type = "chrome",
+          request = "launch",
+          runtimeExecutable = "chromium",
+          runtimeArgs = { "--remote-debugging-port=9222", "--user-data-dir=/tmp/chrome-debug" },
+          webRoot = "${workspaceFolder}/src",
+          before = launch_chromium,
+        },
+        {
+          name = "Attach React app to Chromium",
+          type = "chrome",
+          request = "attach",
+          port = 9222,
+          webRoot = "${workspaceFolder}/src",
+        },
       }
 
-      dap.configurations.typescript = dap.configurations.javascript
-      dap.configurations.javascriptreact = dap.configurations.javascript
-      dap.configurations.typescriptreact = dap.configurations.javascript
-
-      -- Chrome debugger (attach to running dev server, e.g. Vite/CRA/Next)
       dap.adapters.chrome = {
         type = "executable",
         command = "node",
@@ -146,22 +161,6 @@ return {
           require("mason-registry").get_package("chrome-debug-adapter"):get_install_path() .. "/out/src/chromeDebug.js",
         },
       }
-
-      dap.configurations.javascriptreact = {
-        {
-          type = "chrome",
-          request = "attach",
-          name = "Attach Chrome (localhost:3000)",
-          program = "${file}",
-          cwd = vim.fn.getcwd(),
-          sourceMaps = true,
-          protocol = "inspector",
-          port = 9222, -- Chrome remote debugging port
-          webRoot = "${workspaceFolder}/src",
-        },
-      }
-
-      dap.configurations.typescriptreact = dap.configurations.javascriptreact
     end,
   },
   {
