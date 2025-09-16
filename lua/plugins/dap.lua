@@ -127,6 +127,16 @@ return {
           restart = true,
         },
         {
+          name = "Run React dev server (npm dev)",
+          type = "pwa-node",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          runtimeExecutable = "npm",
+          runtimeArgs = { "run", "dev" },
+          console = "integratedTerminal",
+          internalConsoleOptions = "neverOpen",
+        },
+        {
           name = "Run React dev server (npm start)",
           type = "pwa-node",
           request = "launch",

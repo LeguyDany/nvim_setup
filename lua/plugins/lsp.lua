@@ -2,18 +2,16 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
-      -- eslint = {
-      --   settings = {
-      --     format = false,
-      --   },
-      --   -- Restrict ESLint to specific directories (your backend)
-      --   root_dir = function(fname)
-      --     local util = require("lspconfig.util")
-      --     -- Only attach ESLint if we're in a directory with eslint config
-      --     -- This way it won't interfere with your frontend
-      --     return util.root_pattern(".eslint.config.mjs", ".eslintrc.js", ".eslintrc.json", ".eslintrc")(fname)
-      --   end,
-      -- },
+      eslint = {
+        settings = {
+          format = false,
+        },
+        -- Restrict ESLint to specific directories (your backend)
+        root_dir = function(fname)
+          local util = require("lspconfig.util")
+          return util.root_pattern("eslint.config.js")(fname)
+        end,
+      },
     },
     ts_ls = {
       settings = {
