@@ -104,7 +104,7 @@ return {
         },
       }
 
-      dap.configurations.javascript = {
+      local js_config = {
         {
           type = "pwa-node",
           request = "launch",
@@ -163,6 +163,11 @@ return {
           webRoot = "${workspaceFolder}/src",
         },
       }
+
+      dap.configurations.javascript = js_config
+      dap.configurations.typescript = js_config
+      dap.configurations.javascriptreact = js_config
+      dap.configurations.typescriptreact = js_config
 
       dap.adapters.chrome = {
         type = "executable",

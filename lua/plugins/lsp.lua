@@ -49,6 +49,7 @@ return {
       -- Enhanced initialization options
       init_options = {
         preferences = {
+          importModuleSpecifier = "relative",
           disableSuggestions = false,
         },
       },
