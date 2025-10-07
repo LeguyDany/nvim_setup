@@ -2,14 +2,21 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      tailwindcss = {},
       eslint = {
-        settings = {
-          format = false,
-        },
-        -- Restrict ESLint to specific directories (your backend)
         root_dir = function(fname)
           local util = require("lspconfig.util")
-          return util.root_pattern("eslint.config.js")(fname)
+          return util.root_pattern("eslint.config.js", "eslint.config.mjs")(fname)
+        end,
+        on_attach = function(client, bufnr)
+          local util = require("lspconfig.util")
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local has_prettier = util.root_pattern(".prettierrc")(fname)
+
+          if has_prettier then
+            -- disable eslint's formatter if prettier is found
+            client.server_capabilities.documentFormattingProvider = false
+          end
         end,
       },
     },
