@@ -64,6 +64,9 @@ return {
       local js = require("helpers.dap.js")
       js.js_setup(dap)
 
+      local rust = require("helpers.dap.rust")
+      rust.rust_setup(dap)
+
       dap.listeners.before.event_terminated["dapui_config"] = function()
         dapui.close()
       end
