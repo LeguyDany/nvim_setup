@@ -22,20 +22,10 @@ return {
       ts_ls = {
         root_dir = function(fname)
           local util = require("lspconfig.util")
-          local root = util.root_pattern("tsconfig.json", "jsconfig.json")(fname)
-          return root
+          return util.root_pattern("tsconfig.json", "jsconfig.json", ".git")(fname)
         end,
         settings = {
           typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
             -- Enhanced diagnostics for better error reporting
             preferences = {
               includeCompletionsForModuleExports = true,
@@ -43,17 +33,6 @@ return {
             },
             suggest = {
               includeCompletionsForModuleExports = true,
-            },
-          },
-          javascript = {
-            inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
             },
           },
         },
