@@ -1,8 +1,8 @@
 local M = {}
 
 function M.rust_setup(dap)
-  local codelldb_path = require("mason-registry").get_package("codelldb"):get_install_path()
-    .. "/extension/adapter/codelldb"
+  ---@diagnostic disable-next-line: undefined-field
+  local codelldb_path = vim.fn.expand("$MASON/packages/codelldb/extension/adapter/codelldb")
 
   dap.adapters.lldb = {
     type = "server",
