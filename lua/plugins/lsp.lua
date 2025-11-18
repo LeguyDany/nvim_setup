@@ -18,12 +18,16 @@ return {
             client.server_capabilities.documentFormattingProvider = false
           end
         end,
+        settings = {
+          experimental = {
+            useFlatConfig = true,
+          },
+          workingDirectory = {
+            mode = "auto",
+          },
+        },
       },
       ts_ls = {
-        root_dir = function(fname)
-          local util = require("lspconfig.util")
-          return util.root_pattern("tsconfig.json", "jsconfig.json", ".git")(fname)
-        end,
         settings = {
           typescript = {
             -- Enhanced diagnostics for better error reporting

@@ -10,6 +10,9 @@ return {
         "rust-analyzer",
         "tailwindcss",
 
+        -- install linters
+        "eslint_d",
+
         -- install formatters
         "stylua",
         "prettierd", -- JS / TS
@@ -26,5 +29,5 @@ return {
       },
     },
   },
-  { "williamboman/mason.nvim" },
+  { "mason-org/mason.nvim" },
 }
