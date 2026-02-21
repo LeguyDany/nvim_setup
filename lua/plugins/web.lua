@@ -16,13 +16,17 @@ return {
   lazy = false,
   opts = {
     formatters_by_ft = {
-      javascript = get_formatter,
-      javascriptreact = get_formatter,
-      typescript = get_formatter,
-      typescriptreact = get_formatter,
+      javascript = { "eslint_d", "prettier" },
+      typescript = { "eslint_d", "prettier" },
+      javascriptreact = { "eslint_d", "prettier" },
+      typescriptreact = { "eslint_d", "prettier" },
       json = { "prettier" },
       css = { "prettier" },
       mjs = get_formatter,
+    },
+    format_on_save = {
+      lsp_fallback = true,
+      timeout_ms = 500,
     },
   },
 }

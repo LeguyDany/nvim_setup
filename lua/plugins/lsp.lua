@@ -4,10 +4,10 @@ return {
     servers = {
       tailwindcss = {},
       eslint = {
-        root_dir = function(fname)
-          local util = require("lspconfig.util")
-          return util.root_pattern("eslint.config.js", "eslint.config.mjs")(fname)
-        end,
+        -- root_dir = function(fname)
+        --   local util = require("lspconfig.util")
+        --   return util.root_pattern("eslint.config.js", "eslint.config.mjs")(fname)
+        -- end,
         on_attach = function(client, bufnr)
           local util = require("lspconfig.util")
           local fname = vim.api.nvim_buf_get_name(bufnr)
@@ -29,6 +29,14 @@ return {
       },
       ts_ls = {
         settings = {
+          javascript = {
+            -- This is the key part: disable diagnostics for JS files
+            validate = false,
+            suggest = {
+              names = true,
+              paths = true,
+            },
+          },
           typescript = {
             -- Enhanced diagnostics for better error reporting
             preferences = {
