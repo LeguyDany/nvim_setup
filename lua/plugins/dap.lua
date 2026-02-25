@@ -56,6 +56,22 @@ return {
         mode = "n",
         desc = "Toggle DAP UI",
       },
+      {
+        "<leader>da",
+        function()
+          require("helpers.dap.rust").toggle_auto_reattach()
+        end,
+        mode = "n",
+        desc = "Toggle DAP auto-reattach",
+      },
+      {
+        "<leader>ds",
+        function()
+          require("helpers.dap.rust").stop_reattach()
+        end,
+        mode = "n",
+        desc = "Stop DAP auto-reattach",
+      },
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
@@ -68,10 +84,18 @@ return {
       rust.rust_setup(dap)
 
       dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
+        if rust.state.enabled then
+          rust.start_reattach_poll()
+        else
+          dapui.close()
+        end
       end
       dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
+        if rust.state.enabled then
+          rust.start_reattach_poll()
+        else
+          dapui.close()
+        end
       end
     end,
   },
