@@ -116,6 +116,25 @@ function M.stop_reattach()
   vim.notify("Auto-reattach stopped", vim.log.levels.INFO)
 end
 
+local augroup = vim.api.nvim_create_augroup("DapAutoReattach", { clear = true })
+
+local function setup_auto_detach()
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup,
+    pattern = "*.rs",
+    callback = function()
+      if not M.state.enabled then
+        return
+      end
+      local dap = require("dap")
+      local session = dap.session()
+      if session then
+        dap.disconnect({ terminateDebuggee = false })
+      end
+    end,
+  })
+end
+
 function M.rust_setup(dap)
   local mason_path = vim.fn.stdpath("data") .. "/mason"
   local codelldb_path = mason_path .. "/packages/codelldb/extension/adapter/codelldb"
@@ -190,6 +209,8 @@ function M.rust_setup(dap)
       stopOnEntry = false,
     },
   }
+
+  setup_auto_detach()
 end
 
 return M
