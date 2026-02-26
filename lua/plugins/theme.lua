@@ -1,5 +1,17 @@
 -- Return a list of plugins to load
 return {
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("catppuccin").setup({
+  --       flavour = "mocha",
+  --     })
+  --     vim.cmd.colorscheme("catppuccin")
+  --   end,
+  -- },
 
   -- Tokyonight colorscheme
   {
@@ -10,7 +22,7 @@ return {
     config = function()
       -- Set the theme style
       require("tokyonight").setup({
-        style = "moon", -- night / storm / moon / day
+        style = "night", -- night / storm / moon / day
       })
 
       -- Apply the colorscheme
