@@ -2,6 +2,17 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      rust_analyzer = {
+        settings = {
+          ["rust-analyzer"] = {
+            inlayHints = {
+              parameterHints = { enable = false },
+              typeHints = { enable = false },
+              chainingHints = { enable = false },
+            },
+          },
+        },
+      },
       tailwindcss = {},
       eslint = {
         -- root_dir = function(fname)
