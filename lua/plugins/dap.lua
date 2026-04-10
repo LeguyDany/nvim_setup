@@ -51,7 +51,7 @@ return {
         "<leader>du",
         function()
           local dapui = require("dapui")
-          dapui.toggle()
+          dapui.toggle({ layout = 2 })
         end,
         mode = "n",
         desc = "Toggle DAP UI",
@@ -75,7 +75,29 @@ return {
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
-      dapui.setup()
+      ---@diagnostic disable-next-line: missing-fields
+      dapui.setup({
+        layouts = {
+          {
+            elements = {
+              { id = "scopes", size = 0.25 },
+              { id = "breakpoints", size = 0.25 },
+              { id = "stacks", size = 0.25 },
+              { id = "watches", size = 0.25 },
+            },
+            size = 40,
+            position = "left",
+          },
+          {
+            elements = {
+              { id = "repl", size = 0.05 },
+              { id = "console", size = 0.95 },
+            },
+            size = 0.4,
+            position = "bottom",
+          },
+        },
+      })
 
       local js = require("helpers.dap.js")
       js.js_setup(dap)
