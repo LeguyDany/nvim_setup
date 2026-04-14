@@ -17,7 +17,6 @@ return {
         "stylua",
         "prettierd", -- JS / TS
         "black", -- python
-        "rustfmt", -- rust
 
         -- install debuggers
         "debugpy", -- Python
