@@ -15,10 +15,6 @@ return {
       },
       tailwindcss = {},
       eslint = {
-        -- root_dir = function(fname)
-        --   local util = require("lspconfig.util")
-        --   return util.root_pattern("eslint.config.js", "eslint.config.mjs")(fname)
-        -- end,
         on_attach = function(client, bufnr)
           local util = require("lspconfig.util")
           local fname = vim.api.nvim_buf_get_name(bufnr)
@@ -29,9 +25,24 @@ return {
             client.server_capabilities.documentFormattingProvider = false
           end
         end,
+        -- ESLint 9 removed the FlatESLint class. lspconfig's default before_init
+        -- auto-sets experimental.useFlatConfig = true when it detects a flat config,
+        -- which forces the server to load the (now missing) FlatESLint class.
+        before_init = function(_, config)
+          local root_dir = config.root_dir
+          config.settings = config.settings or {}
+          if root_dir then
+            config.settings.workspaceFolder = {
+              uri = root_dir,
+              name = vim.fn.fnamemodify(root_dir, ":t"),
+            }
+          end
+          config.settings.experimental = config.settings.experimental or {}
+          config.settings.experimental.useFlatConfig = false
+        end,
         settings = {
           experimental = {
-            useFlatConfig = true,
+            useFlatConfig = false,
           },
           workingDirectory = {
             mode = "auto",
